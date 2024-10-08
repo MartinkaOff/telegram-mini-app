@@ -1,17 +1,23 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
-import { initData, mockTelegramEnv, parseInitData } from '@telegram-apps/sdk-react';
+import { initData, mockTelegramEnv, parseInitData, retrieveLaunchParams } from '@telegram-apps/sdk-react';
 
 const initializeTelegramSDK = async () => {
   try {
     // Попытка инициализировать настоящее окружение Telegram
     console.log("Инициализация окружения Telegram");
-    const [miniApp] = initData();
-    await miniApp.ready();
+    // const miniApp = initData();
+    // await miniApp.ready();
+
+    const {initDataRaw} = retrieveLaunchParams()
+
+    console.log(initDataRaw, 'initDataRaw')
+    
   } catch (error) {
     // В случае ошибки инициализируем фейковое окружение
     console.error('Ошибка при инициализации Telegram:', error);
+
 
     const initDataRaw = new URLSearchParams([
       ['user', JSON.stringify({
